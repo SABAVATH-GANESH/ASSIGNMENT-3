@@ -1,0 +1,61 @@
+function calcu(a, operator, b) {
+    let result;
+    switch(operator) {
+        case '+':
+            result = a + b;
+            break;
+        case '-':
+            result = a - b;
+            break;
+        case '*':
+            result = a * b;
+            break;
+        case '/':
+            if (b !== 0) {
+                result = a / b;
+            } else {
+                console.log("Error: Division by zero!");
+                return;
+            }
+            break;
+        default:
+            console.log("Error: Invalid operator!");
+            return;
+    }
+    return result;
+}
+
+function main() {
+    const readline = require('readline');
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+
+    rl.question("Enter the number of tests: ", (test) => {
+        let tests = parseInt(test);
+        let count = tests;
+
+        const performTest = () => {
+            if (count <= 0) {
+                rl.close();
+                return;
+            }
+
+            rl.question("Enter the value of a: ", (a) => {
+                rl.question("Enter the value of b: ", (b) => {
+                    rl.question("Enter the operator (+, -, *, /): ", (op) => {
+                        let result = calcu(parseInt(a), op, parseInt(b));
+                        console.log("Result:", result);
+                        count--;
+                        performTest();
+                    });
+                });
+            });
+        };
+
+        performTest();
+    });
+}
+
+main();
